@@ -36,13 +36,16 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.yandex.mapkit.MapKit
+import com.yandex.mapkit.MapKitFactory
+import com.yandex.mapkit.mapview.MapView
+import com.yandex.mapkit.uri.Uri
 import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
 @Suppress("UNREACHABLE_CODE")
 class MapFragment : Fragment() {
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
-    private lateinit var text_current_lat_lon: TextView
     lateinit var locationRequest: com.google.android.gms.location.LocationRequest
     var current_lat = 0.0f
     var current_lon = 0.0f
@@ -65,31 +68,7 @@ class MapFragment : Fragment() {
         return view
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        //mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        //var intent = Intent("ru.yandex.yandexnavi.action.BUILD_ROUTE_ON_MAP")
-        //intent.setPackage("ru.yandex.yandexnavi")
 
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun webViewSetup(){
-        var wb_webview = view?.findViewById<WebView>(R.id.wb_webView)
-        wb_webview?.webViewClient = WebViewClient()
-        wb_webview?.apply {
-            loadUrl("https://yandex.ru/maps/?rtext=${current_lat}, ${current_lon}~55.76009,37.648801&rtt=mt")
-            settings.javaScriptEnabled = true
-            settings.safeBrowsingEnabled = true
-        }
-    }
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getLastLocation(){
         if (checkPermission()){
@@ -100,8 +79,14 @@ class MapFragment : Fragment() {
                 } else {
                     current_lat = ((location.latitude.toFloat() * 10000000).roundToInt() / 10000000.0).toFloat()
                     current_lon = ((location.longitude.toFloat() * 10000000).roundToInt() / 10000000.0).toFloat()
+                    var wb_webview = view?.findViewById<WebView>(R.id.wb_webView)
+                    wb_webview?.webViewClient = WebViewClient()
+                    wb_webview?.apply {
+                        loadUrl("https://yandex.ru/maps/?rtext=${current_lat}, ${current_lon}~55.76009,37.648801&rtt=mt")
+                        settings.javaScriptEnabled = true
+                        settings.safeBrowsingEnabled = true
+                    }
                     Log.d("Mylog", current_lat.toString() + current_lon.toString())
-                    webViewSetup()
                 }
             }
 
@@ -143,7 +128,6 @@ class MapFragment : Fragment() {
             var mLastLocation: Location? = locationResult.lastLocation
             current_lat = mLastLocation!!.latitude.toFloat()
             current_lon = mLastLocation!!.longitude.toFloat()
-            webViewSetup()
         }
     }
 
