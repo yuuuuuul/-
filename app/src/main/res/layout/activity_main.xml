@@ -6,13 +6,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cont"
     tools:context=".MainActivity">
-    <EditText
+    <TextView
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:id="@+id/text_current_lat_lon"
+        android:id="@+id/text_view"
         android:visibility="invisible"
         android:text="lalala">
-    </EditText>
+    </TextView>
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"

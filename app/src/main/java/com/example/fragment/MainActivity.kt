@@ -26,14 +26,12 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.yandex.mapkit.MapKitFactory
 
 class MainActivity : AppCompatActivity() {
 
     var tabTitle = arrayOf("Phone", "Map")
     val manager = supportFragmentManager
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
-    private lateinit var text_current_lat_lon: TextView
     lateinit var locationRequest: com.google.android.gms.location.LocationRequest
     var current_lat = 0.0
     var current_lon = 0.0
@@ -43,6 +41,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         var pager = findViewById<ViewPager2>(R.id.view_pager)
+        var text_view: TextView = findViewById(R.id.text_view)
+        text_view.text = intent.getStringExtra("point")
         var tl = findViewById<TabLayout>(R.id.tab_layout)
         pager.adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
         TabLayoutMediator(tl, pager) { tab, position ->

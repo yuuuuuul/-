@@ -36,10 +36,6 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.yandex.mapkit.MapKit
-import com.yandex.mapkit.MapKitFactory
-import com.yandex.mapkit.mapview.MapView
-import com.yandex.mapkit.uri.Uri
 import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
